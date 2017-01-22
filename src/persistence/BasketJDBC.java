@@ -11,7 +11,7 @@ public class BasketJDBC {
 
     private Connection con;
 
-    public List<Jugador> selectAllPlayers() throws SQLException{
+    public List<Jugador> selectAllPlayers(ResultSet) throws SQLException{
         List <Jugador> jugadores = new ArrayList<>();
         String query = "select * from player";
         Statement st = con.createStatement();
@@ -81,6 +81,36 @@ public class BasketJDBC {
         ps.setString(1, j.getNombre());
         ps.executeUpdate();
         ps.close();
+    }
+
+    public Jugador obtenerPlayerPorNombre(String nombre) throws SQLException{
+        String select = "select * from player where name=?";
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setString(1, nombre);
+        ResultSet rs = ps.executeQuery();
+
+        Jugador jugador = new Jugador();
+        while(rs.next()){
+            jugador.setNombre(rs.getString("name"));
+            jugador.setFechan(rs.getDate("birth").toLocalDate());
+            jugador.setNumCanastas(rs.getInt("nbaskets"));
+            jugador.setNumAsistencias(rs.getInt("nassists"));
+            jugador.setNumRebotes(rs.getInt("nrebounds"));
+            jugador.setPosicion(rs.getString("position"));
+            Equipo equipo = new Equipo(rs.getString("team"));
+            jugador.setEquipo(equipo);
+        }
+        rs.close();
+        ps.close();
+        return jugador;
+    }
+
+    public ArrayList<Jugador> obtenerPlayersPorNombre(String nombre) throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        String select = "select * from player where name like=?";
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setString(1, nombre);
+        return players;
     }
 
 

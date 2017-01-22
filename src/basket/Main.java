@@ -40,12 +40,26 @@ public class Main {
             Jugador j1 = new Jugador("Sergio", LocalDate.of(1996,8,8), 100, 100, 100, "base", e1);
             Jugador j2 = new Jugador("Fernando", LocalDate.of(1996,8,8), 200, 200, 200, "base", e1);
             //gestor.insertTeam(e1);
+            System.out.println("Equipo e1 insertado en la bdd.");
+            //gestor.insertTeam(e2);
+            System.out.println("Equipo e2 insertado en la bdd.");
+            //gestor.insertTeam(e3);
+            System.out.println("Equipo e3 insertado en la bdd.");
             //gestor.insertPlayer(j1);
+            System.out.println("Jugador j1 insertado en la bdd.");
             //gestor.insertPlayer(j2);
+            System.out.println("Jugador j2 insertado en la bdd.");
             j1.setNumRebotes(234); j1.setNumAsistencias(234); j1.setNumCanastas(234);
             gestor.modificarPuntosPlayer(j1);
-            gestor.borrarPlayer(j2);
+            System.out.println("Puntos de j1 modificados.");
+            j2.setEquipo(e3);
+            gestor.modificarTeamPlayer(j2);
+            System.out.println("Equipo de j2 modificado.");
+            //gestor.borrarPlayer(j2);
+            System.out.println("Obtener Jugador por nombre: Sergio.");
+            System.out.println(gestor.obtenerPlayerPorNombre("Sergio"));
             gestor.desconectar();
+            System.out.println("Se ha desconectado de la bdd.");
         }catch (SQLException ex){
             System.out.println("Error con la BBDD: "+ex.getMessage());
         }
