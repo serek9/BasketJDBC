@@ -39,6 +39,8 @@ public class Main {
             Equipo e3 = new Equipo("Equipo 3", "Madrid", LocalDate.of(1960,10,10));
             Jugador j1 = new Jugador("Sergio", LocalDate.of(1996,8,8), 100, 100, 100, "base", e1);
             Jugador j2 = new Jugador("Fernando", LocalDate.of(1996,8,8), 200, 200, 200, "base", e1);
+            Jugador j3 = new Jugador("Victor", LocalDate.of(1985,8,8), 300, 300, 300, "alero", e2);
+            Jugador j4 = new Jugador("Alberto", LocalDate.of(1984,8,8), 400, 300, 300, "alero", e1);
             //gestor.insertTeam(e1);
             System.out.println("Equipo e1 insertado en la bdd.");
             //gestor.insertTeam(e2);
@@ -49,11 +51,15 @@ public class Main {
             System.out.println("Jugador j1 insertado en la bdd.");
             //gestor.insertPlayer(j2);
             System.out.println("Jugador j2 insertado en la bdd.");
+            //gestor.insertPlayer(j3);
+            System.out.println("Jugador j3 insertado en la bdd.");
+            //gestor.insertPlayer(j4);
+            System.out.println("Jugador j4 insertado en la bdd.");
             j1.setNumRebotes(234); j1.setNumAsistencias(234); j1.setNumCanastas(234);
             gestor.modificarPuntosPlayer(j1);
             System.out.println("Puntos de j1 modificados.");
-            j2.setEquipo(e3);
-            gestor.modificarTeamPlayer(j2);
+            //j2.setEquipo(e3);
+            //gestor.modificarTeamPlayer(j2);
             System.out.println("Equipo de j2 modificado.");
             //gestor.borrarPlayer(j2);
             System.out.println("Obtener Jugador por nombre: Sergio.");
@@ -68,6 +74,14 @@ public class Main {
             System.out.println(gestor.obtenerPlayersPosicion("base"));
             System.out.println("Obtener Jugadores con fecha anterior a 8/8/1990");
             System.out.println(gestor.obtenerPlayersFechan(LocalDate.of(1990,8,8)));
+            System.out.println("Obtener Equipos de Bilbao");
+            System.out.println(gestor.obtenerTeamsLocalidad("Bilbao"));
+            System.out.println("Obtener Jugadores del Equipo 2");
+            System.out.println(gestor.obtenerPlayersTeam("Equipo 2"));
+            System.out.println("Obtener Jugadores del Equipo 1 que juegon en alero");
+            System.out.println(gestor.obtenerPlayersPosicionTeam("Equipo 1", "alero"));
+            System.out.println("Obtener Jugador con MAX canastas del Equipo 1");
+            System.out.println(gestor.obtenerPlayerMaxCanastasTeam("Equipo 1"));
             gestor.desconectar();
             System.out.println("Se ha desconectado de la bdd.");
         }catch (SQLException ex){

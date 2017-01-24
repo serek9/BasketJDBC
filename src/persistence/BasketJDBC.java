@@ -48,6 +48,18 @@ public class BasketJDBC {
         return players;
     }
 
+    public ArrayList<Equipo> selectTeams(ResultSet rs) throws SQLException{
+        ArrayList<Equipo> teams = new ArrayList<>();
+        while(rs.next()){
+            Equipo e = new Equipo();
+            e.setNombre(rs.getString("name"));
+            e.setFechac(rs.getDate("creation").toLocalDate());
+            e.setLocalidad(rs.getString("city"));
+            teams.add(e);
+        }
+        return teams;
+    }
+
     public void insertTeam(Equipo e) throws SQLException{
         String insert = "insert into team values (?,?,?);";
         PreparedStatement ps = con.prepareStatement(insert);
@@ -168,6 +180,48 @@ public class BasketJDBC {
         String select = "select * from player where birth<=?";
         PreparedStatement ps = con.prepareStatement(select);
         ps.setDate(1, java.sql.Date.valueOf(date));
+        ResultSet rs = ps.executeQuery();
+        players = selectPlayers(rs);
+        return players;
+    }
+
+    public ArrayList<Equipo> obtenerTeamsLocalidad(String localidad) throws SQLException{
+        ArrayList<Equipo> teams = new ArrayList<>();
+        String select = "select * from team where city=?";
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setString(1, localidad);
+        ResultSet rs = ps.executeQuery();
+        teams = selectTeams(rs);
+        return teams;
+    }
+
+    public ArrayList<Jugador> obtenerPlayersTeam(String name) throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        String select = "select * from player where team=?";
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setString(1, name);
+        ResultSet rs = ps.executeQuery();
+        players = selectPlayers(rs);
+        return players;
+    }
+
+    public ArrayList<Jugador> obtenerPlayersPosicionTeam(String name, String posicion) throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        String select = "select * from player where position = ? and team = ?";
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setString(1, posicion);
+        ps.setString(2, name);
+        ResultSet rs = ps.executeQuery();
+        players = selectPlayers(rs);
+        return players;
+    }
+
+    public ArrayList<Jugador> obtenerPlayerMaxCanastasTeam(String name) throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        String select = "select * from player where team = ? and nbaskets=(select max(nbaskets) from player where team = ?)";
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setString(1, name);
+        ps.setString(2,name);
         ResultSet rs = ps.executeQuery();
         players = selectPlayers(rs);
         return players;

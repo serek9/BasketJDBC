@@ -8,6 +8,10 @@ public class Equipo {
     public String localidad;
     public LocalDate fechac;
 
+    public Equipo(){
+
+    }
+
     public Equipo(String nombre) {
         this.nombre = nombre;
     }
