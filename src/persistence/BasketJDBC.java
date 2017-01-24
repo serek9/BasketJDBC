@@ -12,25 +12,6 @@ public class BasketJDBC {
 
     private Connection con;
 
-//    public List<Jugador> selectAllPlayers() throws SQLException{
-//        List <Jugador> jugadores = new ArrayList<>();
-//        String query = "select * from player";
-//        Statement st = con.createStatement();
-//        ResultSet rs = st.executeQuery(query);
-//        while (rs.next()){
-//            Jugador j = new Jugador();
-//            j.setNombre(rs.getString("name"));
-//            j.setFechan(rs.getDate("birth").toLocalDate());
-//            j.setNumCanastas(rs.getInt("nbaskets"));
-//            j.setNumAsistencias(rs.getInt("nassists"));
-//            j.setNumRebotes(rs.getInt("nrebounds"));
-//            j.setPosicion(rs.getString("position"));
-//            j.setEquipo(new Equipo(rs.getString("team")));
-//        }
-//        rs.close();
-//        st.close();
-//        return jugadores;
-//    }
 
     public ArrayList<Jugador> selectPlayers(ResultSet rs) throws SQLException{
         ArrayList<Jugador> players = new ArrayList<>();
@@ -45,6 +26,7 @@ public class BasketJDBC {
             j.setEquipo(new Equipo(rs.getString("team")));
             players.add(j);
         }
+        rs.close();
         return players;
     }
 
@@ -57,6 +39,7 @@ public class BasketJDBC {
             e.setLocalidad(rs.getString("city"));
             teams.add(e);
         }
+        rs.close();
         return teams;
     }
 
@@ -141,6 +124,8 @@ public class BasketJDBC {
         ps.setString(1, "%"+nombre+"%");
         ResultSet rs = ps.executeQuery();
         players = selectPlayers(rs);
+        rs.close();
+        ps.close();
         return players;
     }
 
@@ -151,6 +136,8 @@ public class BasketJDBC {
         ps.setInt(1, numCanastas);
         ResultSet rs = ps.executeQuery();
         players = selectPlayers(rs);
+        rs.close();
+        ps.close();
         return players;
     }
 
@@ -162,6 +149,8 @@ public class BasketJDBC {
         ps.setInt(2, num2);
         ResultSet rs = ps.executeQuery();
         players = selectPlayers(rs);
+        rs.close();
+        ps.close();
         return players;
     }
 
@@ -172,6 +161,8 @@ public class BasketJDBC {
         ps.setString(1, posicion);
         ResultSet rs = ps.executeQuery();
         players = selectPlayers(rs);
+        rs.close();
+        ps.close();
         return players;
     }
 
@@ -182,6 +173,8 @@ public class BasketJDBC {
         ps.setDate(1, java.sql.Date.valueOf(date));
         ResultSet rs = ps.executeQuery();
         players = selectPlayers(rs);
+        rs.close();
+        ps.close();
         return players;
     }
 
@@ -192,6 +185,8 @@ public class BasketJDBC {
         ps.setString(1, localidad);
         ResultSet rs = ps.executeQuery();
         teams = selectTeams(rs);
+        rs.close();
+        ps.close();
         return teams;
     }
 
@@ -202,6 +197,8 @@ public class BasketJDBC {
         ps.setString(1, name);
         ResultSet rs = ps.executeQuery();
         players = selectPlayers(rs);
+        rs.close();
+        ps.close();
         return players;
     }
 
@@ -213,6 +210,8 @@ public class BasketJDBC {
         ps.setString(2, name);
         ResultSet rs = ps.executeQuery();
         players = selectPlayers(rs);
+        rs.close();
+        ps.close();
         return players;
     }
 
@@ -224,6 +223,19 @@ public class BasketJDBC {
         ps.setString(2,name);
         ResultSet rs = ps.executeQuery();
         players = selectPlayers(rs);
+        rs.close();
+        ps.close();
+        return players;
+    }
+
+    public ArrayList<Jugador> obtenerRankingCanastas() throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        String select = "select * from player order by nbaskets desc";
+        PreparedStatement ps = con.prepareStatement(select);
+        ResultSet rs = ps.executeQuery();
+        players = selectPlayers(rs);
+        rs.close();
+        ps.close();
         return players;
     }
 

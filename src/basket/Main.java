@@ -82,6 +82,8 @@ public class Main {
             System.out.println(gestor.obtenerPlayersPosicionTeam("Equipo 1", "alero"));
             System.out.println("Obtener Jugador con MAX canastas del Equipo 1");
             System.out.println(gestor.obtenerPlayerMaxCanastasTeam("Equipo 1"));
+            System.out.println("Ranking de Jugadores (Canastas)");
+            System.out.println(gestor.obtenerRankingCanastas());
             gestor.desconectar();
             System.out.println("Se ha desconectado de la bdd.");
         }catch (SQLException ex){
