@@ -60,6 +60,14 @@ public class Main {
             System.out.println(gestor.obtenerPlayerPorNombre("Sergio"));
             System.out.println("Obtener Jugadores por nombre: e.");
             System.out.println(gestor.obtenerPlayersPorNombre("er"));
+            System.out.println("Obtener Jugadores con mas canastas: 200");
+            System.out.println(gestor.obtenerPlayersNumCanastasMayorIgual(200));
+            System.out.println("Obtener Jugadores con asistencias entre 200 y 240");
+            System.out.println(gestor.obtenerPlayersNumAsistenciasEntre(200, 240));
+            System.out.println("Obtener Jugadores que jueguen en base");
+            System.out.println(gestor.obtenerPlayersPosicion("base"));
+            System.out.println("Obtener Jugadores con fecha anterior a 8/8/1990");
+            System.out.println(gestor.obtenerPlayersFechan(LocalDate.of(1990,8,8)));
             gestor.desconectar();
             System.out.println("Se ha desconectado de la bdd.");
         }catch (SQLException ex){

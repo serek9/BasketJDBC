@@ -4,6 +4,7 @@ import model.Equipo;
 import model.Jugador;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,7 +135,41 @@ public class BasketJDBC {
     public ArrayList<Jugador> obtenerPlayersNumCanastasMayorIgual(int numCanastas) throws SQLException{
         ArrayList<Jugador> players = new ArrayList<>();
         String select = "select * from player where nbaskets >= ?";
-        //TODO
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setInt(1, numCanastas);
+        ResultSet rs = ps.executeQuery();
+        players = selectPlayers(rs);
+        return players;
+    }
+
+    public ArrayList<Jugador> obtenerPlayersNumAsistenciasEntre(int num1, int num2) throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        String select = "select * from player where nassists between ? and ?";
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setInt(1, num1);
+        ps.setInt(2, num2);
+        ResultSet rs = ps.executeQuery();
+        players = selectPlayers(rs);
+        return players;
+    }
+
+    public ArrayList<Jugador> obtenerPlayersPosicion(String posicion) throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        String select = "select * from player where position=?";
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setString(1, posicion);
+        ResultSet rs = ps.executeQuery();
+        players = selectPlayers(rs);
+        return players;
+    }
+
+    public ArrayList<Jugador> obtenerPlayersFechan(LocalDate date) throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        String select = "select * from player where birth<=?";
+        PreparedStatement ps = con.prepareStatement(select);
+        ps.setDate(1, java.sql.Date.valueOf(date));
+        ResultSet rs = ps.executeQuery();
+        players = selectPlayers(rs);
         return players;
     }
 
