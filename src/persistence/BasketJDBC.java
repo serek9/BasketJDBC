@@ -11,12 +11,29 @@ public class BasketJDBC {
 
     private Connection con;
 
-    public List<Jugador> selectAllPlayers(ResultSet) throws SQLException{
-        List <Jugador> jugadores = new ArrayList<>();
-        String query = "select * from player";
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(query);
-        while (rs.next()){
+//    public List<Jugador> selectAllPlayers() throws SQLException{
+//        List <Jugador> jugadores = new ArrayList<>();
+//        String query = "select * from player";
+//        Statement st = con.createStatement();
+//        ResultSet rs = st.executeQuery(query);
+//        while (rs.next()){
+//            Jugador j = new Jugador();
+//            j.setNombre(rs.getString("name"));
+//            j.setFechan(rs.getDate("birth").toLocalDate());
+//            j.setNumCanastas(rs.getInt("nbaskets"));
+//            j.setNumAsistencias(rs.getInt("nassists"));
+//            j.setNumRebotes(rs.getInt("nrebounds"));
+//            j.setPosicion(rs.getString("position"));
+//            j.setEquipo(new Equipo(rs.getString("team")));
+//        }
+//        rs.close();
+//        st.close();
+//        return jugadores;
+//    }
+
+    public ArrayList<Jugador> selectPlayers(ResultSet rs) throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        while(rs.next()){
             Jugador j = new Jugador();
             j.setNombre(rs.getString("name"));
             j.setFechan(rs.getDate("birth").toLocalDate());
@@ -25,10 +42,9 @@ public class BasketJDBC {
             j.setNumRebotes(rs.getInt("nrebounds"));
             j.setPosicion(rs.getString("position"));
             j.setEquipo(new Equipo(rs.getString("team")));
+            players.add(j);
         }
-        rs.close();
-        st.close();
-        return jugadores;
+        return players;
     }
 
     public void insertTeam(Equipo e) throws SQLException{
@@ -107,13 +123,20 @@ public class BasketJDBC {
 
     public ArrayList<Jugador> obtenerPlayersPorNombre(String nombre) throws SQLException{
         ArrayList<Jugador> players = new ArrayList<>();
-        String select = "select * from player where name like=?";
+        String select = "select * from player where name like ?";
         PreparedStatement ps = con.prepareStatement(select);
-        ps.setString(1, nombre);
+        ps.setString(1, "%"+nombre+"%");
+        ResultSet rs = ps.executeQuery();
+        players = selectPlayers(rs);
         return players;
     }
 
-
+    public ArrayList<Jugador> obtenerPlayersNumCanastasMayorIgual(int numCanastas) throws SQLException{
+        ArrayList<Jugador> players = new ArrayList<>();
+        String select = "select * from player where nbaskets >= ?";
+        //TODO
+        return players;
+    }
 
     public void conectar() throws SQLException{
         String url = "jdbc:mysql://localhost:3306/basket";

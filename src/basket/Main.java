@@ -58,6 +58,8 @@ public class Main {
             //gestor.borrarPlayer(j2);
             System.out.println("Obtener Jugador por nombre: Sergio.");
             System.out.println(gestor.obtenerPlayerPorNombre("Sergio"));
+            System.out.println("Obtener Jugadores por nombre: e.");
+            System.out.println(gestor.obtenerPlayersPorNombre("er"));
             gestor.desconectar();
             System.out.println("Se ha desconectado de la bdd.");
         }catch (SQLException ex){
