@@ -253,3 +253,11 @@ public class BasketJDBC {
     }
 
 }
+
+
+
+//        DriverManager	Para cargar un driver
+//        Connection	Para establecer conexiones con las bases de datos
+//        Statement	Para ejecutar sentencias SQL y enviarlas a las BBDD
+//        PreparedStatement	La ruta de ejecución está predeterminada en el servidor de base de datos que le permite ser ejecutado varias veces
+//        ResultSet	Para almacenar el resultado de la consulta
